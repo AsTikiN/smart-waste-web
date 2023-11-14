@@ -1,4 +1,3 @@
-import { ThemeProvider } from "styled-components";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Router from "./routes/routes";
@@ -6,7 +5,7 @@ import { darkTheme, lightTheme } from "./theme/variants";
 
 import { ThemeVariants } from "theme/variants";
 import { useTheme } from "hooks/useTheme";
-import { Button, CssBaseline } from "@mui/material";
+import { Button, ThemeProvider } from "@mui/material";
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
