@@ -14,6 +14,7 @@ import {
   CREATE_USER_SERVER,
 } from "../actions/authActions";
 import { StoreType } from "redux/types/types";
+import { REHYDRATE } from "redux-persist";
 
 export interface AuthStateType {
   isAuthorized: boolean;
@@ -26,8 +27,11 @@ const authInitialState: AuthStateType = {
 };
 
 const authReducer = (state = authInitialState, action: any) => {
-  console.log("action.type", action.type);
   switch (action.type) {
+    case "persist/REHYDRATE": {
+      const { isAuthorized, token } = action.payload.auth || {};
+      return { ...state, token, isAuthorized };
+    }
     case successAction(CREATE_USER_SERVER): {
       const { accessToken } = action.payload.data;
       return { ...state, token: accessToken, isAuthorized: true };

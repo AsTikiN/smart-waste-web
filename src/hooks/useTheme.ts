@@ -6,7 +6,6 @@ import { updateTheme } from "redux/actions/themeActions";
 
 export const useTheme = () => {
   const theme = useSelector(getTheme);
-
   const dispatch = useDispatch();
 
   const toggleTheme = () => {

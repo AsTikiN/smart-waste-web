@@ -7,6 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import options from "./axiosConfig";
 import rootReducer from "./reducers/rootReducer";
+import rootSaga from "./saga/rootSaga";
 
 const clients = {
   default: {
@@ -24,12 +25,13 @@ const clients = {
 };
 
 const makeStore: any = () => {
+  const sagaMiddleware = createSagaMiddleware();
   const { persistStore, persistReducer } = require("redux-persist");
   const storage = require("redux-persist/lib/storage").default;
 
   const persistConfig = {
-    key: "nextjs",
-    whitelist: ["auth", "theme", "book", "payment", "plan", "product"],
+    key: "root",
+    // whitelist: ["auth", "app"],
     storage,
   };
   const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,10 +39,11 @@ const makeStore: any = () => {
   const store: any = createStore<any, any, any, any>(
     persistedReducer,
     {},
-    composeWithDevTools(applyMiddleware(multiClientMiddleware(clients, options))),
+    composeWithDevTools(applyMiddleware(multiClientMiddleware(clients, options), sagaMiddleware)),
   );
 
   store.__persistor = persistStore(store);
+  store.sagaTask = sagaMiddleware.run(rootSaga);
 
   return store;
 };

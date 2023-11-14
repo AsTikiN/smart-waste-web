@@ -1,5 +1,14 @@
+import withPrivateRoute from "hocs/withPrivateRoute";
+import { Outlet } from "react-router-dom";
+import { NavBar } from "./components/NavBar";
+
 const Main = () => {
-  return <>Hello Worlds</>;
+  return (
+    <>
+      <Outlet />
+      <NavBar />
+    </>
+  );
 };
 
-export default Main;
+export default withPrivateRoute(Main);

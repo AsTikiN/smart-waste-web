@@ -1,4 +1,5 @@
 import { Loaders } from "redux/types/loaders";
+import { CreateUserServerProps, UpdateStatusProps } from "redux/types/types";
 
 export const UPDATE_IS_AUTHORIZED = "UPDATE_IS_AUTHORIZED";
 export const CLEAR_AUTH_DATA = "CLEAR_AUTH_DATA";
@@ -13,10 +14,6 @@ export const CLEAR_PERSISTED_DATA = "CLEAR_PERSISTED_DATA";
 export const LOGIN_USER_WITH_GOOGLE = "LOGIN_USER_WITH_GOOGLE";
 export const AUTH_WHOP = "AUTH_WHOP";
 
-interface UpdateStatusProps {
-  status: boolean;
-}
-
 export const logout = () => ({
   type: LOGOUT,
   payload: {},
@@ -27,7 +24,7 @@ export const updateIsAuthorized = ({ status }: UpdateStatusProps) => ({
   payload: { status },
 });
 
-export const createUserServer = ({ username, email, password }: any) => ({
+export const createUserServer = ({ username, email, password }: CreateUserServerProps) => ({
   type: CREATE_USER_SERVER,
   payload: {
     request: {

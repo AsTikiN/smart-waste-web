@@ -6,6 +6,7 @@ import { createUserServer } from "redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getLoaders } from "redux/reducers/appReducer";
+import { Routes, pages } from "routes/types";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const SignUp = () => {
             </Button>
           </Stack>
           <Typography mt={"20px"} textAlign="center" variant="body1">
-            Already have an account? <Link to="/signin">Sign in</Link>
+            Already have an account? <Link to={pages[Routes.login]()}>Sign in</Link>
           </Typography>
         </AuthLayout>
       </Wrapper>

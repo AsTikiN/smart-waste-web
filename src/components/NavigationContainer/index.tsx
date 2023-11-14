@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { getNavigationLink } from "redux/reducers/appReducer";
 
-const SideEffectsContainer = () => {
+const NavigationContainer = () => {
   const link = useSelector(getNavigationLink);
   const navigate = useNavigate();
 
@@ -15,4 +15,4 @@ const SideEffectsContainer = () => {
   return <></>;
 };
 
-export default SideEffectsContainer;
+export default NavigationContainer;

@@ -6,9 +6,12 @@ import { loginUserServer } from "redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getLoaders } from "redux/reducers/appReducer";
+import { useTheme } from "hooks/useTheme";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const { toggleTheme } = useTheme();
+
   const loaders = useSelector(getLoaders);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,8 +23,6 @@ const SignIn = () => {
   const handleSignUp = () => {
     dispatch(loginUserServer({ email, password }));
   };
-  console.log(loaders.signIn, "loaders.signIn");
-  if (loaders.signIn) return <div>aaa bebra</div>;
 
   return (
     <Page>
@@ -37,7 +38,7 @@ const SignIn = () => {
             </Button>
           </Stack>
           <Typography mt={"20px"} textAlign="center" variant="body1">
-            Don't have account yet? <Link to="/signup">Sign in</Link>
+            Don't have account yet? <Link to="/signup">Sign up</Link>
           </Typography>
         </AuthLayout>
       </Wrapper>
