@@ -6,6 +6,7 @@ import SignIn from "modules/Auth/SignIn";
 import Main from "modules/Main";
 import { Routes, pages } from "./types";
 import Map from "modules/Map";
+import Camera from "modules/Camera";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
             }
           />
           <Route path={pages[Routes.map]()} element={<Map />} />
+          <Route path={pages[Routes.camera]()} element={<Camera />} />
         </Route>
         <Route path={pages[Routes.signup]()} element={<SignUp />} />
         <Route path={pages[Routes.login]()} element={<SignIn />} />

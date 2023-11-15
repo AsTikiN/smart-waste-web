@@ -1,12 +1,6 @@
 import { styled } from "@mui/material";
-import { FC } from "react";
 
-interface Props {
-  lat: number;
-  lng: number;
-}
-
-const Marker: FC<Props> = ({ lat, lng }) => {
+const CustomMarker = () => {
   return <Wrapper>♻️</Wrapper>;
 };
 
@@ -24,4 +18,4 @@ const Wrapper = styled("div")`
   transform: translate(-50%, -50%);
 `;
 
-export default Marker;
+export default CustomMarker;
