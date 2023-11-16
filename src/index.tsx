@@ -22,6 +22,7 @@ ReactDOM.render(
             "*[role='dialog']": {
               zIndex: 1000,
             },
+            fontFamily: "Inter !important",
           },
           ".MuiDrawer-root > .MuiPaper-root": {
             height: `calc(50% - 56px)`,

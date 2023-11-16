@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { GoogleMap, useJsApiLoader, Marker, MarkerClusterer } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, Marker, MarkerClusterer, InfoWindow } from "@react-google-maps/api";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBinsCoordinates } from "redux/reducers/coordinatesReducer";
 import { getBinsCoordinatesServer } from "redux/actions/coordinatesActions";
 import { BinsCoordinate } from "redux/types/types";
 import BrandLoader from "components/Loader/BrandLoader";
+import { Stack, Typography, useTheme } from "@mui/material";
 
 const containerStyle = {
   width: "100%",
@@ -27,24 +28,28 @@ const defaultCenter = {
 
 const Map = () => {
   const dispatch = useDispatch();
+  const { palette } = useTheme();
   const data = useSelector(getBinsCoordinates);
 
   const [mapOptions, setMapOptions] = useState({
     center: defaultCenter,
-    zoom: 10, // Initial zoom level
+    zoom: 10,
   });
-  const [map, setMap] = React.useState(null);
+  const [activeMarker, setActiveMarker] = useState<BinsCoordinate | null>(null);
+  const [map, setMap] = useState(null);
+  const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: mapConfig.bootstrapURLKeys.key,
   });
 
-  const handleMarkerClick = (marker: BinsCoordinate) => {
-    // setMapOptions({
-    //   center: { lat: marker.lat, lng: marker.lng },
-    //   zoom: 15,
-    // });
+  const handleMarkerClick = (marker: BinsCoordinate) => () => {
+    setActiveMarker(marker);
+  };
+
+  const handleRemoveActiveMarker = () => {
+    setActiveMarker(null);
   };
 
   const onLoad = React.useCallback(function callback(map: any) {
@@ -58,12 +63,26 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getBinsCoordinatesServer());
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+        },
+      );
+    } else {
+      console.error("Geolocation is not supported in this browser.");
+    }
   }, []);
-
+  console.log("userLocation", userLocation);
   if (!isLoaded) return <BrandLoader show={true} />;
 
-  return isLoaded ? (
+  return (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -80,7 +99,7 @@ const Map = () => {
           styles={[
             {
               textColor: "white",
-              url: "https://cdn-icons-png.flaticon.com/512/12535/12535929.png",
+              url: "https://i.ibb.co/8mrx6J8/Group-1.png",
               height: 40,
               width: 40,
             },
@@ -90,29 +109,40 @@ const Map = () => {
             return (
               <>
                 {data.map((marker, index) => (
-                  <Marker
-                    key={index}
-                    position={{ lat: marker.lat, lng: marker.lng }}
-                    clusterer={clusterer}
-                    onClick={() => handleMarkerClick(marker)}
-                    icon={{
-                      url: "https://cdn-icons-png.flaticon.com/512/12535/12535929.png",
-                      scaledSize: new window.google.maps.Size(40, 40),
-                      origin: new window.google.maps.Point(0, 0),
-                      anchor: new window.google.maps.Point(20, 20),
-                    }}
-                  >
-                    {/* <CustomMarker /> */}
-                  </Marker>
+                  <>
+                    <Marker
+                      key={index}
+                      position={{ lat: marker.lat, lng: marker.lng }}
+                      clusterer={clusterer}
+                      onClick={handleMarkerClick(marker)}
+                      icon={{
+                        url: "https://i.ibb.co/8mrx6J8/Group-1.png",
+                        scaledSize: new window.google.maps.Size(40, 40),
+                        origin: new window.google.maps.Point(0, 0),
+                        anchor: new window.google.maps.Point(20, 20),
+                      }}
+                    ></Marker>
+                  </>
                 ))}
               </>
             );
           }}
         </MarkerClusterer>
+        {userLocation && <Marker position={{ lat: userLocation.lat, lng: userLocation.lng }}></Marker>}
+        {activeMarker && (
+          <InfoWindow position={{ lat: data[0].lat, lng: data[0].lng }} onCloseClick={handleRemoveActiveMarker}>
+            <Stack>
+              <Typography variant="body1" color="#0e0e0e">
+                Name: {activeMarker.name}
+              </Typography>
+              <Typography variant="body1" color="#0e0e0e">
+                Address: {activeMarker.address}
+              </Typography>
+            </Stack>
+          </InfoWindow>
+        )}
       </GoogleMap>
     </div>
-  ) : (
-    <></>
   );
 };
 

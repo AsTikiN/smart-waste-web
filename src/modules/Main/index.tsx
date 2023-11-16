@@ -9,6 +9,8 @@ import { getHydrated, getLoaders } from "redux/reducers/appReducer";
 import { getIsAuthorized } from "redux/reducers/authReducer";
 import BrandLoader from "components/Loader/BrandLoader";
 import Header from "components/Header";
+import { getBinsCoordinatesServer } from "redux/actions/coordinatesActions";
+import { getAllBucketItemsServer } from "redux/actions/bucketActions";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -20,13 +22,15 @@ const Main = () => {
   useEffect(() => {
     if (isHydrated && isAuthorized) {
       dispatch(getUserDataServer());
+      dispatch(getBinsCoordinatesServer());
+      dispatch(getAllBucketItemsServer());
     }
   }, [isAuthorized, isHydrated]);
 
   return (
     <>
       <Header />
-      <BrandLoader show={loaders.self || loaders.scanImage} />
+      <BrandLoader show={loaders.self || loaders.scanImage || loaders.items} />
       <Outlet />
       <NavBar />
     </>

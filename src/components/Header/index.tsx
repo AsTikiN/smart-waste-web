@@ -1,11 +1,17 @@
-import { Box, useTheme } from "@mui/material";
+import { Stack, Switch, useTheme as useMuiTheme } from "@mui/material";
 import { Logo } from "components/Logo";
+import { useTheme } from "hooks/useTheme";
 
 const Header = () => {
-  const theme = useTheme();
+  const { toggleTheme } = useTheme();
+  const theme = useMuiTheme();
+
+  const handleToggleTheme = () => {
+    toggleTheme();
+  };
 
   return (
-    <Box
+    <Stack
       sx={{
         position: "fixed",
         width: "100%",
@@ -13,10 +19,13 @@ const Header = () => {
         borderBottom: `1px solid ${theme.palette.divider}`,
         zIndex: 100,
         backgroundColor: theme.palette.background.default,
+        flexDirection: "row",
+        justifyContent: "space-between",
       }}
     >
       <Logo />
-    </Box>
+      <Switch onChange={handleToggleTheme} />
+    </Stack>
   );
 };
 

@@ -7,11 +7,11 @@ import {
   Stack,
   MenuItem,
   Typography,
-  Select,
   Grid,
   IconButton,
   styled,
   SelectChangeEvent,
+  Select,
 } from "@mui/material";
 import FlipIcon from "@mui/icons-material/Flip";
 import BucketItem from "./components/BucketItem";
@@ -119,10 +119,6 @@ const Bucket = () => {
     setMaterial(material);
   }, [scanData]);
 
-  useEffect(() => {
-    dispatch(getAllBucketItemsServer());
-  }, []);
-
   return (
     <Box sx={{ padding: "60px 0 20px" }} height="calc(100vh - 56px)">
       <Container sx={{ height: "100%" }}>
@@ -154,8 +150,9 @@ const Bucket = () => {
 
       <SwipeableEdgeDrawer open={isOpen} setOpen={setIsOpen}>
         <Grid container spacing={1} padding="20px 30px">
-          <Grid xs={10}>
-            <Select placeholder="Material" fullWidth value={material as any} onChange={handleSelectMaterial}>
+          <Grid xs={10} sx={{ position: "relative" }}>
+            {!material && <Typography sx={{ position: "absolute", top: "15px", left: "15px" }}>Material</Typography>}
+            <Select fullWidth value={material as any} onChange={handleSelectMaterial}>
               {bucketItemVariants.map((item) => (
                 <MenuItem value={item.name} key={item.id}>
                   {item.name}
