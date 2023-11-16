@@ -5,6 +5,7 @@ export enum Routes {
   profile = "profile",
   map = "map",
   camera = "camera",
+  bucket = "bucket",
 }
 
 export const pages = {
@@ -14,4 +15,5 @@ export const pages = {
   [Routes.profile]: () => "/profile",
   [Routes.map]: () => "/map",
   [Routes.camera]: () => "/camera",
+  [Routes.bucket]: () => "/bucket",
 };

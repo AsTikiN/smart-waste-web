@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction, Paper, styled } from "@mui/material";
-import { Map, Person, Camera } from "@mui/icons-material";
+import { Map, Person, Inventory2Outlined } from "@mui/icons-material";
 
 export const NavBar = () => {
   const { pathname } = useLocation();
@@ -12,7 +12,13 @@ export const NavBar = () => {
         <StyledBottomNavigation showLabels value={pathname}>
           <BottomNavigationAction component={Link} to="/profile" value="/profile" label="Profile" icon={<Person />} />
           <BottomNavigationAction component={Link} to="/map" value="/map" label="Map" icon={<Map />} />
-          <BottomNavigationAction component={Link} to="/camera" value="/camera" label="Camera" icon={<Camera />} />
+          <BottomNavigationAction
+            component={Link}
+            to="/bucket"
+            value="/bucket"
+            label="Bucket"
+            icon={<Inventory2Outlined />}
+          />
         </StyledBottomNavigation>
       </Wrapper>
     </>

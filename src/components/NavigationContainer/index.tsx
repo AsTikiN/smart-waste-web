@@ -12,6 +12,7 @@ const NavigationContainer = () => {
 
     navigate(link);
   }, [link]);
+
   return <></>;
 };
 

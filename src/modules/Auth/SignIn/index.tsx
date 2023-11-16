@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { styled, Box, TextField, Button, Stack, Typography } from "@mui/material";
+import { styled, Box, TextField, Button, Stack, Typography, Container } from "@mui/material";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { loginUserServer } from "redux/actions/authActions";
@@ -26,22 +26,29 @@ const SignIn = () => {
 
   return (
     <Page>
-      <Wrapper>
-        <AuthLayout title="Sign in">
-          <Stack spacing={6}>
-            <Stack spacing={2}>
-              <TextField fullWidth placeholder="Email" value={email} onChange={handleInputChange(setEmail)} />
-              <TextField fullWidth placeholder="Password" onChange={handleInputChange(setPassword)} />
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
+        <Wrapper>
+          <AuthLayout title="Sign in">
+            <Stack spacing={6}>
+              <Stack spacing={2}>
+                <TextField fullWidth placeholder="Email" value={email} onChange={handleInputChange(setEmail)} />
+                <TextField fullWidth placeholder="Password" onChange={handleInputChange(setPassword)} />
+              </Stack>
+              <Button
+                sx={{ height: "50px", borderRadius: "10px" }}
+                fullWidth
+                variant="contained"
+                onClick={handleSignUp}
+              >
+                Sign in
+              </Button>
             </Stack>
-            <Button sx={{ height: "50px", borderRadius: "10px" }} fullWidth variant="contained" onClick={handleSignUp}>
-              Sign in
-            </Button>
-          </Stack>
-          <Typography mt={"20px"} textAlign="center" variant="body1">
-            Don't have account yet? <Link to="/signup">Sign up</Link>
-          </Typography>
-        </AuthLayout>
-      </Wrapper>
+            <Typography mt={"20px"} textAlign="center" variant="body1">
+              Don't have account yet? <Link to="/signup">Sign up</Link>
+            </Typography>
+          </AuthLayout>
+        </Wrapper>
+      </Container>
     </Page>
   );
 };

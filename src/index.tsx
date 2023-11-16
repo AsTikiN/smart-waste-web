@@ -17,6 +17,19 @@ ReactDOM.render(
         styles={{
           body: { margin: 0 },
           ".gmnoprint, .gm-fullscreen-control": { display: "none" },
+          "*": {
+            boxSizing: "border-box",
+            "*[role='dialog']": {
+              zIndex: 1000,
+            },
+          },
+          ".MuiDrawer-root > .MuiPaper-root": {
+            height: `calc(50% - 56px)`,
+            overflow: "visible",
+          },
+          ".PrivateSwipeArea-root": {
+            height: "0 !important",
+          },
         }}
       />
       <ToastContainer position="bottom-right" autoClose={2500} />

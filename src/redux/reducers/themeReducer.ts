@@ -17,6 +17,7 @@ const themeReducer = (state = themeInitialState, action: any) => {
   switch (action.type) {
     case REHYDRATE: {
       const data = action.payload;
+
       if (data) {
         return {
           ...state,

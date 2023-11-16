@@ -29,7 +29,7 @@ const authInitialState: AuthStateType = {
 const authReducer = (state = authInitialState, action: any) => {
   switch (action.type) {
     case "persist/REHYDRATE": {
-      const { isAuthorized, token } = action.payload.auth || {};
+      const { isAuthorized, token } = action.payload?.auth || {};
       return { ...state, token, isAuthorized };
     }
     case successAction(CREATE_USER_SERVER): {
@@ -39,6 +39,10 @@ const authReducer = (state = authInitialState, action: any) => {
     case successAction(LOGIN_USER_SERVER): {
       const { accessToken } = action.payload.data;
       return { ...state, token: accessToken, isAuthorized: true };
+    }
+    case UPDATE_IS_AUTHORIZED: {
+      const status = action.payload.status;
+      return { ...state, token: null, isAuthorized: status };
     }
     default: {
       return { ...state };

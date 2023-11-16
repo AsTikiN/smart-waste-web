@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getBinsCoordinates } from "redux/reducers/coordinatesReducer";
 import { getBinsCoordinatesServer } from "redux/actions/coordinatesActions";
 import { BinsCoordinate } from "redux/types/types";
+import BrandLoader from "components/Loader/BrandLoader";
 
 const containerStyle = {
   width: "100%",
@@ -60,7 +61,9 @@ const Map = () => {
     dispatch(getBinsCoordinatesServer());
   }, []);
 
-  return isLoaded && defaultCenter ? (
+  if (!isLoaded) return <BrandLoader show={true} />;
+
+  return isLoaded ? (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -99,7 +102,6 @@ const Map = () => {
                       anchor: new window.google.maps.Point(20, 20),
                     }}
                   >
-                    123123213
                     {/* <CustomMarker /> */}
                   </Marker>
                 ))}

@@ -24,6 +24,7 @@ export const getDesignTokens = (mode: PaletteMode) =>
             paddingBottom: "0.6rem",
           },
           contained: {
+            color: "#ffffff",
             boxShadow: "none",
             ":hover": {
               boxShadow: "none",

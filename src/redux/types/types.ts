@@ -3,12 +3,18 @@ import { ThemeStateType } from "../reducers/themeReducer";
 import { AppStateType } from "../reducers/appReducer";
 import { Loaders } from "./loaders";
 import { CoordinateStateType } from "redux/reducers/coordinatesReducer";
+import { UserStateType } from "redux/reducers/userReducer";
+import { ScanStateType } from "redux/reducers/scanReducer";
+import { BucketStateType } from "redux/reducers/bucketReducer";
 
 export interface StoreType {
   auth: AuthStateType;
   theme: ThemeStateType;
   app: AppStateType;
   cords: CoordinateStateType;
+  user: UserStateType;
+  scan: ScanStateType;
+  bucket: BucketStateType;
 }
 
 export interface UpdateLoaderProps {
@@ -32,4 +38,32 @@ export interface CreateUserServerProps {
   username: string;
   email: string;
   password: string;
+}
+
+export interface User {
+  email: string;
+  id: string;
+}
+
+export interface BucketItem {
+  id: string;
+  name: string;
+  count: number;
+}
+
+export interface BucketItemVariant {
+  id: string | number;
+  name: string;
+}
+
+export interface ScanImageProps {
+  Photo: File;
+}
+
+export interface AddToBucketProps {
+  bucketItem: BucketItem;
+}
+
+export interface setBucketProps {
+  bucket: BucketItem[];
 }

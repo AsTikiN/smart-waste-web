@@ -4,14 +4,16 @@ import Router from "./routes/routes";
 import { getDesignTokens } from "./theme/variants";
 
 import { useTheme } from "hooks/useTheme";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
 
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
   return (
     <ThemeProvider theme={getDesignTokens(theme)}>
+      <CssBaseline />
       <GoogleOAuthProvider clientId={clientId as string}>
         <Router />
       </GoogleOAuthProvider>
