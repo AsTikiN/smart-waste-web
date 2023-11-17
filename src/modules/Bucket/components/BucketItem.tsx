@@ -25,7 +25,7 @@ const BucketItem: FC<Props> = ({ children, count, changeCounter }) => {
       <Typography variant="body1" color={palette.grey[700]}>
         {children}
       </Typography>
-      <Counter count={count} changeCounter={changeCounter} />
+      <Counter limit={10} count={count} changeCounter={changeCounter} />
     </Stack>
   );
 };

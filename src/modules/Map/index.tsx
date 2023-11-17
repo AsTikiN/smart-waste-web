@@ -8,6 +8,7 @@ import { BinsCoordinate } from "redux/types/types";
 import BrandLoader from "components/Loader/BrandLoader";
 import { Box, Button, Container, Stack, Typography, useTheme } from "@mui/material";
 import SwipeableEdgeDrawer from "components/BottomSheets";
+import { isUserNearPoint } from "lib/isUserNearPoint";
 
 const containerStyle = {
   width: "100%",
@@ -41,6 +42,7 @@ const Map = () => {
   const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
 
+  const isUserLocationKnown = !(userLocation.lat + userLocation.lng);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: mapConfig.bootstrapURLKeys.key,
@@ -103,7 +105,7 @@ const Map = () => {
   }, []);
 
   if (!isLoaded) return <BrandLoader show={true} />;
-  console.log("acac", activeMarker);
+  console.log("isUserNearPoint");
   return (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
@@ -150,7 +152,7 @@ const Map = () => {
             );
           }}
         </MarkerClusterer>
-        {userLocation && <Marker position={{ lat: userLocation.lat, lng: userLocation.lng }}></Marker>}
+        {isUserLocationKnown && <Marker position={{ lat: userLocation.lat, lng: userLocation.lng }}></Marker>}
       </GoogleMap>
       <SwipeableEdgeDrawer open={showActiveMarker} setOpen={setShowActiveMarker}>
         <Container>
@@ -160,18 +162,24 @@ const Map = () => {
           <Typography mt="10px" variant="h6" fontWeight={500}>
             {activeMarker?.address}
           </Typography>
-          <Typography mt="5px" onClick={handleGetPermisson}>
-            We don't have location permission.
-            <Box
-              sx={{
-                display: "inline",
-                color: "#6B69F6",
-                textDecoration: "underline",
-              }}
-            >
-              Give a permission
-            </Box>
-          </Typography>
+          {activeMarker?.categories.map((category) => category.emoji)}
+          {isUserLocationKnown && (
+            <Typography mt="5px" onClick={handleGetPermisson}>
+              We don't have location permission.
+              <Box
+                sx={{
+                  display: "inline",
+                  color: "#6B69F6",
+                  textDecoration: "underline",
+                }}
+              >
+                Give a permission
+              </Box>
+            </Typography>
+          )}
+          {activeMarker && isUserNearPoint(userLocation, { lat: activeMarker.lat, lng: activeMarker.lng }, 50)
+            ? "test1"
+            : "test2"}
           <Stack spacing={2} mt="20px">
             <Button size="large" fullWidth variant="outlined" onClick={handleOpenMap}>
               Go

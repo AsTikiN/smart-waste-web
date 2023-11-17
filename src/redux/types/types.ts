@@ -28,6 +28,7 @@ export interface BinsCoordinate {
   lng: number;
   name: string;
   address: string;
+  categories: { slug: string; emoji: string; name: string }[];
 }
 
 export interface UpdateStatusProps {

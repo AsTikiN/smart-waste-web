@@ -166,7 +166,7 @@ const Bucket = () => {
             {!material && <Typography sx={{ position: "absolute", top: "15px", left: "15px" }}>Material</Typography>}
             <Select fullWidth value={material as any} onChange={handleSelectMaterial}>
               {bucketItemVariants.map((item) => (
-                <MenuItem value={item.categories[0].slug} key={item.id}>
+                <MenuItem value={item.categories[0]?.slug} key={item.id}>
                   {item.name}
                 </MenuItem>
               ))}
@@ -187,7 +187,7 @@ const Bucket = () => {
             </IconButton>
           </Grid>
           <Grid mt="20px">
-            <Counter count={drawerCounter} changeCounter={(count: number) => setDrawerCounter(count)} />
+            <Counter count={drawerCounter} limit={10} changeCounter={(count: number) => setDrawerCounter(count)} />
           </Grid>
           <Grid xs={12}>
             <Stack spacing={2} mt="40px">

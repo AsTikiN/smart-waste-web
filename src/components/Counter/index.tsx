@@ -5,10 +5,11 @@ import { Add, Remove } from "@mui/icons-material";
 
 interface Props {
   count: number;
+  limit?: number;
   changeCounter: (count: number) => void;
 }
 
-const Counter: FC<Props> = ({ count, changeCounter }) => {
+const Counter: FC<Props> = ({ count, changeCounter, limit }) => {
   const { palette } = useTheme();
 
   const handleIncrement = () => {
@@ -27,7 +28,7 @@ const Counter: FC<Props> = ({ count, changeCounter }) => {
       <CounterText color={palette.grey[700]} variant="h5">
         {count}
       </CounterText>
-      <StyledButton variant="outlined" onClick={handleIncrement}>
+      <StyledButton disabled={(limit || 0) >= count} variant="outlined" onClick={handleIncrement}>
         <Add />
       </StyledButton>
     </Stack>
