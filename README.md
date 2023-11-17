@@ -1,52 +1,80 @@
-# dApp Developer Platform Client
+# SmartWaste for Web - README
 
-## Description
+![React](https://img.shields.io/badge/React-17.0.2-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-This repository contains the source code for the "dApp Developer Platform Client" React project. Below you will find information about the project stack, how to run it locally, and the necessary environment variables for proper app functionality.
+## Screenshots
 
-## Project Stack
+<div style="display: flex; justify-content: space-between;">
+    <img src="screenshots/1.png" width="250"/>
+    <img src="screenshots/2.png" width="250"/>
+    <img src="screenshots/3.png" width="250"/>
+</div>
 
--   Programming Language: TypeScript (ts)
--   Framework: React (react)
--   Main Libraries: Material-UI (mui), Redux (redux), Redux-Axios (redux-axios), Redux-Saga (redux-saga)
+## Table of Contents
 
-## Requirements
+- [Introduction](#introduction)
+- [What is SmartWaste](#what-is-smartwaste)
+- [Features and Innovations](#features-and-innovations)
+  - [Interactive Collection Points Map](#interactive-collection-points-map)
+  - [AI for Waste Recognition](#ai-for-waste-recognition)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Tools](#tools)
+- [Contributing](#contributing)
+- [License](#license)
 
--   Node.js version 16.14.0 or newer
--   Yarn (package manager) for installing dependencies and running the project
+## Introduction
 
-## Installation and Usage
+Welcome to the world of SmartWaste - an innovative program designed to simplify waste sorting processes and educate users on eco-friendly habits! This document provides information on how to use the program, its features, and benefits.
 
-1.  Download or clone the repository to your local machine.
-2.  Open a terminal in the root directory of the project.
-3.  Run the command `yarn install` to install the dependencies.
-4.  Run the command `yarn dev` to start the project.
+## What is SmartWaste
 
-## Environment Configuration
+SmartWaste is a program designed to simplify waste sorting for those lacking experience in this area. It offers an intuitive interface and incorporates gamification elements for user convenience.
 
-To ensure proper functionality of the application, you need to configure the following environment variables, which are not included in this repository. Create a `.env` file and set the following variables:
+## Features and Innovations
 
--   `REACT_APP_API_URL` - URL for communicating with the API.
--   `REACT_APP_IMAGE_HOST_KEY` - Key for image hosting, using imgbb API.
--   `REACT_APP_AUTH0_DOMAIN` - Auth0 domain for user authentication.
--   `REACT_APP_AUTH0_CLIENT_ID` - Auth0 client ID.
--   `REACT_APP_AUTH0_REALM` - Auth0 realm.
--   `REACT_APP_AUTH0_USER_SCOPE` - Auth0 user scope.
--   `REACT_APP_AUTH0_LOGIN_RESPONSE_TYPE` - Response type for authentication.
--   `REACT_APP_AUTH0_CLIENT_SECRET` - Auth0 client secret.
--   `REACT_APP_AUTH0_TENANT` - Auth0 tenant.
--   `REACT_APP_MAINNET_URL` - Mainnet URL.
--   `REACT_APP_PREPROD_URL` - Pre-production URL.
--   `REACT_APP_PREVIEW_URL` - Preview URL.
--   `REACT_APP_STRIPE_SECRET_KEY` - Stripe secret key for financial operations.
--   `REACT_APP_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key for client-side usage.
+### Interactive Collection Points Map
 
-Please note that the actual values for these variables should be provided by you, as they contain sensitive information such as access keys and secrets.
+Discover the locations of waste collection points and their functionalities using the interactive map.
 
-## Authentication
+### AI for Waste Recognition
 
-Authentication is handled using Auth0. Details about user authentication can be found on the [Auth0](https://auth0.com/) website.
+Utilize modern technology for automatic waste type recognition based on photographs.
 
-## Financial Operations
+## Getting Started
 
-Stripe is used for financial operations. Details about using Stripe can be found on the official [Stripe](https://stripe.com/) website.
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+## Installation
+
+1. Clone the repository to your local machine using Git:
+
+```shell
+ git clone https://github.com/AsTikiN/smart-waste-web
+```
+2. Navigate to the project directory.
+3. Install dependencies:
+4. Start the development server:
+5. Open your web browser and visit http://localhost:3000.
+
+## Usage
+
+- Launch the SmartWaste app in your web browser.
+- Explore the interactive map to discover waste collection points.
+- Utilize the AI for waste recognition by uploading photos.
+- Engage with the gamification elements to enhance the waste sorting experience.
+
+## Tools
+
+- React - JavaScript library for building user interfaces.
+- Other relevant tools used in the project.
+
+## Contributing
+
+We welcome contributions from the community. If you'd like to contribute to the project, please follow our Contributing Guidelines.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
