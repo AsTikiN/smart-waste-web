@@ -33,7 +33,7 @@ ReactDOM.render(
           },
         }}
       />
-      <ToastContainer position="bottom-right" autoClose={2500} />
+      <ToastContainer position="top-right" autoClose={2500} />
     </Provider>
   </>,
   document.getElementById("root"),

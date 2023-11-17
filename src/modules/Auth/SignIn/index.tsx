@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { styled, Box, TextField, Button, Stack, Typography, Container } from "@mui/material";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { loginUserServer } from "redux/actions/authActions";
@@ -32,7 +33,7 @@ const SignIn = () => {
             <Stack spacing={6}>
               <Stack spacing={2}>
                 <TextField fullWidth placeholder="Email" value={email} onChange={handleInputChange(setEmail)} />
-                <TextField fullWidth placeholder="Password" onChange={handleInputChange(setPassword)} />
+                <TextField fullWidth placeholder="Password" type="password" onChange={handleInputChange(setPassword)} />
               </Stack>
               <Button
                 sx={{ height: "50px", borderRadius: "10px" }}

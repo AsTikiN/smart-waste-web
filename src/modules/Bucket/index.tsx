@@ -123,7 +123,11 @@ const Bucket = () => {
 
   useEffect(() => {
     if (!scanData) return;
-    const material = scanData.items[0].name;
+    const material = scanData.items[0]?.name;
+    if (!material) {
+      toast.error("Try another side");
+      return;
+    }
     setMaterial(material);
   }, [scanData]);
 

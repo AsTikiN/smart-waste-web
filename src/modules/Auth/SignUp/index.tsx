@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { styled, Box, TextField, Button, Stack, Typography } from "@mui/material";
+import { styled, Box, TextField, Button, Stack, Typography, Container } from "@mui/material";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { createUserServer } from "redux/actions/authActions";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getLoaders } from "redux/reducers/appReducer";
 import { Routes, pages } from "routes/types";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -26,23 +27,35 @@ const SignUp = () => {
 
   return (
     <Page>
-      <Wrapper>
-        <AuthLayout title="Sign up">
-          <Stack spacing={6}>
-            <Stack spacing={2}>
-              <TextField fullWidth placeholder="Username" value={username} onChange={handleInputChange(setUsername)} />
-              <TextField fullWidth placeholder="Email" value={email} onChange={handleInputChange(setEmail)} />
-              <TextField fullWidth placeholder="Password" onChange={handleInputChange(setPassword)} />
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
+        <Wrapper>
+          <AuthLayout title="Sign up">
+            <Stack spacing={6}>
+              <Stack spacing={2}>
+                <TextField
+                  fullWidth
+                  placeholder="Username"
+                  value={username}
+                  onChange={handleInputChange(setUsername)}
+                />
+                <TextField fullWidth placeholder="Email" value={email} onChange={handleInputChange(setEmail)} />
+                <TextField fullWidth placeholder="Password" type="password" onChange={handleInputChange(setPassword)} />
+              </Stack>
+              <Button
+                sx={{ height: "50px", borderRadius: "10px" }}
+                fullWidth
+                variant="contained"
+                onClick={handleSignUp}
+              >
+                Sign up
+              </Button>
             </Stack>
-            <Button sx={{ height: "50px", borderRadius: "10px" }} fullWidth variant="contained" onClick={handleSignUp}>
-              Sign up
-            </Button>
-          </Stack>
-          <Typography mt={"20px"} textAlign="center" variant="body1">
-            Already have an account? <Link to={pages[Routes.login]()}>Sign in</Link>
-          </Typography>
-        </AuthLayout>
-      </Wrapper>
+            <Typography mt={"20px"} textAlign="center" variant="body1">
+              Already have an account? <Link to={pages[Routes.login]()}>Sign in</Link>
+            </Typography>
+          </AuthLayout>
+        </Wrapper>
+      </Container>
     </Page>
   );
 };
