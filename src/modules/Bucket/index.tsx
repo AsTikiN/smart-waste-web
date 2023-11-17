@@ -154,10 +154,10 @@ const Bucket = () => {
           </Stack>
           <Stack mt="20px" spacing={2} sx={{ flex: 1, justifyContent: "flex-end" }}>
             <Button size="large" fullWidth variant="outlined" onClick={() => setIsOpen(true)}>
-              Add an item
+              Add item
             </Button>
             <Button size="large" fullWidth variant="contained" onClick={handleShowPoints}>
-              Find the nearest recycle point
+              Show recycle points
             </Button>
           </Stack>
         </Stack>
