@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes as ReactRoutes } from "react-router-dom";
+import { BrowserRouter, Route, Routes as ReactRoutes, Navigate } from "react-router-dom";
 
 import SideEffectsContainer from "components/NavigationContainer";
 import SignUp from "modules/Auth/SignUp";
@@ -22,6 +22,7 @@ const Router = () => {
         </Route>
         <Route path={pages[Routes.signup]()} element={<SignUp />} />
         <Route path={pages[Routes.login]()} element={<SignIn />} />
+        <Route path="*" element={<Navigate to={pages[Routes.profile]()} />} />
       </ReactRoutes>
       <SideEffectsContainer />
     </BrowserRouter>
