@@ -48,7 +48,7 @@ export interface User {
 }
 
 export interface BucketItem {
-  id: string;
+  id: string | number;
   name: string;
   count: number;
 }

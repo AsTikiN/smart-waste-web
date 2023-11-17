@@ -78,11 +78,14 @@ const Bucket = () => {
       return;
     }
 
+    const element = bucketItemVariants.find((item) => item.categories[0].slug === material);
+    if (!element) return;
+
     dispatch(
       addToBucket({
         bucketItem: {
-          id: uuid(),
-          name: bucketItemVariants.find((item) => item.categories[0].slug === material)?.name || "",
+          id: element.id,
+          name: element.name,
           count: drawerCounter,
         },
       }),

@@ -11,6 +11,7 @@ import SwipeableEdgeDrawer from "components/BottomSheets";
 import { isUserNearPoint } from "lib/isUserNearPoint";
 import { dropBucketServer } from "redux/actions/bucketActions";
 import { getBucket } from "redux/reducers/bucketReducer";
+import { toast } from "react-toastify";
 
 const containerStyle = {
   width: "100%",
@@ -39,7 +40,7 @@ const Map = () => {
 
   const data = useSelector(getBinsCoordinates);
   const bucket = useSelector(getBucket);
-  console.log("bucket", bucket);
+
   const [mapOptions, setMapOptions] = useState({
     center: defaultCenter,
     zoom: 10,
@@ -83,7 +84,12 @@ const Map = () => {
   };
 
   const handleCloseModal = () => {
-    // dispatch(dropBucketServer({items: }));
+    if (!bucket.length) {
+      toast.error("Your bucket is empty");
+      return;
+    }
+
+    dispatch(dropBucketServer({ items: bucket.map((el) => ({ id: el.id as number, count: el.count })) }));
     setShowActiveMarker(false);
   };
 
