@@ -38,6 +38,7 @@ const bucketReducer = (state = bucketInitialState, action: any) => {
     }
     case successAction(GET_ALL_BUCKET_ITEMS_SERVER): {
       const bucketItemVariants = action.payload.data.items;
+      console.log("bucketItemVariants", bucketItemVariants);
       return { ...state, bucketItemVariants };
     }
     default:

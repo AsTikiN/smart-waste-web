@@ -82,6 +82,12 @@ const Map = () => {
     getPermission();
   };
 
+  const handleOpenMap = () => {
+    if (!activeMarker) return;
+    const url = `http://maps.google.com/maps?f=d&daddr=${activeMarker.lat} ${activeMarker.lng}`;
+    window.open(url, "_blank");
+  };
+
   const onLoad = React.useCallback(function callback(map: any) {
     // const bounds = new window.google.maps.LatLngBounds(defaultCenter);
     // map.fitBounds(bounds);
@@ -93,7 +99,7 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
-    getPermission();
+    // getPermission();
   }, []);
 
   if (!isLoaded) return <BrandLoader show={true} />;
@@ -167,7 +173,7 @@ const Map = () => {
             </Box>
           </Typography>
           <Stack spacing={2} mt="20px">
-            <Button size="large" fullWidth variant="outlined">
+            <Button size="large" fullWidth variant="outlined" onClick={handleOpenMap}>
               Go
             </Button>
             <Button size="large" fullWidth variant="contained" onClick={handleCloseModal}>

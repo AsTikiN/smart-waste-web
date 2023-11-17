@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import { scanImageServer } from "redux/actions/scanActions";
 import { getScanData } from "redux/reducers/scanReducer";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { getCategoriesCoordinatesServer } from "redux/actions/coordinatesActions";
 
 const Bucket = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,7 +37,7 @@ const Bucket = () => {
   const [file, setFile] = useState("");
   const [drawerCounter, setDrawerCounter] = useState(0);
   const [bucketItems, setBucketItems] = useState<IBucketItem[]>([]);
-
+  console.log("bucketItems", bucketItems);
   const bucket = useSelector(getBucket);
   const scanData = useSelector(getScanData);
   const bucketItemVariants = useSelector(getBucketItemVariants);
@@ -109,6 +110,13 @@ const Bucket = () => {
     }
   };
 
+  const handleShowPoints = () => {
+    if (!bucketItems || !bucketItems.length) {
+      toast.error("You can't find points for empty bucket");
+    }
+    dispatch(getCategoriesCoordinatesServer(bucketItems.map((bucket) => bucket.name)));
+  };
+
   useEffect(() => {
     setBucketItems(bucket);
   }, [bucket]);
@@ -141,7 +149,7 @@ const Bucket = () => {
             <Button size="large" fullWidth variant="outlined" onClick={() => setIsOpen(true)}>
               Add an item
             </Button>
-            <Button size="large" fullWidth variant="contained">
+            <Button size="large" fullWidth variant="contained" onClick={handleShowPoints}>
               Find the nearest recycle point
             </Button>
           </Stack>
@@ -154,7 +162,7 @@ const Bucket = () => {
             {!material && <Typography sx={{ position: "absolute", top: "15px", left: "15px" }}>Material</Typography>}
             <Select fullWidth value={material as any} onChange={handleSelectMaterial}>
               {bucketItemVariants.map((item) => (
-                <MenuItem value={item.name} key={item.id}>
+                <MenuItem value={item.categories[0].slug} key={item.id}>
                   {item.name}
                 </MenuItem>
               ))}

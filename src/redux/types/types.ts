@@ -54,6 +54,7 @@ export interface BucketItem {
 export interface BucketItemVariant {
   id: string | number;
   name: string;
+  categories: { slug: string }[];
 }
 
 export interface ScanImageProps {

@@ -4,7 +4,7 @@ import { StoreType } from "redux/types/types";
 
 export interface AppStateType {
   hydrated: boolean;
-  navigationLink: string | null;
+  navigationLink: { link: string } | null;
   loaders: Record<Loaders, boolean>;
 }
 
@@ -29,7 +29,7 @@ const appReducer = (state = appInitialState, action: any) => {
     case NAVIGATE: {
       return {
         ...state,
-        navigationLink: action.payload.link,
+        navigationLink: action.payload,
       };
     }
     case UPDATE_LOADER: {

@@ -4,14 +4,14 @@ import { useNavigate } from "react-router";
 import { getNavigationLink } from "redux/reducers/appReducer";
 
 const NavigationContainer = () => {
-  const link = useSelector(getNavigationLink);
+  const navigateTo = useSelector(getNavigationLink);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!link) return;
+    if (!navigateTo || !navigateTo.link) return;
 
-    navigate(link);
-  }, [link]);
+    navigate(navigateTo.link);
+  }, [navigateTo]);
 
   return <></>;
 };

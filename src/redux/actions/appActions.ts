@@ -3,7 +3,7 @@ import { UpdateLoaderProps } from "redux/types/types";
 export const NAVIGATE = "NAVIGATE";
 export const UPDATE_LOADER = "UPDATE_LOADER";
 
-export const navigateTo = (link: string) => ({
+export const navigateTo = ({ link }: { link: string }) => ({
   type: NAVIGATE,
   payload: {
     link,

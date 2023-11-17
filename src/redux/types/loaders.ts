@@ -5,4 +5,5 @@ export enum Loaders {
   self = "self",
   scanImage = "scanImage",
   items = "items",
+  coordinatedBind = "coordinatedBind",
 }
