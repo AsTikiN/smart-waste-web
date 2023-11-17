@@ -9,6 +9,8 @@ import BrandLoader from "components/Loader/BrandLoader";
 import { Box, Button, Container, Stack, Typography, useTheme } from "@mui/material";
 import SwipeableEdgeDrawer from "components/BottomSheets";
 import { isUserNearPoint } from "lib/isUserNearPoint";
+import { dropBucketServer } from "redux/actions/bucketActions";
+import { getBucket } from "redux/reducers/bucketReducer";
 
 const containerStyle = {
   width: "100%",
@@ -30,9 +32,14 @@ const defaultCenter = {
 
 const Map = () => {
   const dispatch = useDispatch();
-  const { palette } = useTheme();
-  const data = useSelector(getBinsCoordinates);
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: mapConfig.bootstrapURLKeys.key,
+  });
 
+  const data = useSelector(getBinsCoordinates);
+  const bucket = useSelector(getBucket);
+  console.log("bucket", bucket);
   const [mapOptions, setMapOptions] = useState({
     center: defaultCenter,
     zoom: 10,
@@ -43,10 +50,9 @@ const Map = () => {
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
 
   const isUserLocationKnown = !(userLocation.lat + userLocation.lng);
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: mapConfig.bootstrapURLKeys.key,
-  });
+  const isCanDrop =
+    !activeMarker ||
+    (activeMarker && isUserNearPoint(userLocation, { lat: activeMarker.lat, lng: activeMarker.lng }, 50));
 
   const getPermission = () => {
     if (navigator.geolocation) {
@@ -77,6 +83,7 @@ const Map = () => {
   };
 
   const handleCloseModal = () => {
+    // dispatch(dropBucketServer({items: }));
     setShowActiveMarker(false);
   };
 
@@ -105,7 +112,7 @@ const Map = () => {
   }, []);
 
   if (!isLoaded) return <BrandLoader show={true} />;
-  console.log("isUserNearPoint");
+
   return (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
@@ -177,15 +184,12 @@ const Map = () => {
               </Box>
             </Typography>
           )}
-          {activeMarker && isUserNearPoint(userLocation, { lat: activeMarker.lat, lng: activeMarker.lng }, 50)
-            ? "test1"
-            : "test2"}
           <Stack spacing={2} mt="20px">
             <Button size="large" fullWidth variant="outlined" onClick={handleOpenMap}>
               Go
             </Button>
-            <Button size="large" fullWidth variant="contained" onClick={handleCloseModal}>
-              Clean bucket
+            <Button disabled={!isCanDrop} size="large" fullWidth variant="contained" onClick={handleCloseModal}>
+              Clear bucket
             </Button>
           </Stack>
         </Container>

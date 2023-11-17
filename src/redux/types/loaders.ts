@@ -6,4 +6,5 @@ export enum Loaders {
   scanImage = "scanImage",
   items = "items",
   coordinatedBind = "coordinatedBind",
+  dropBucket = "dropBucket",
 }

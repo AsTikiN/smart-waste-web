@@ -70,3 +70,7 @@ export interface AddToBucketProps {
 export interface setBucketProps {
   bucket: BucketItem[];
 }
+
+export interface DropBucketProps {
+  items: { id: number; count: number }[];
+}

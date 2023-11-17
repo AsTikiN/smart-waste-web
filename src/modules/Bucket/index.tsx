@@ -82,7 +82,7 @@ const Bucket = () => {
       addToBucket({
         bucketItem: {
           id: uuid(),
-          name: material,
+          name: bucketItemVariants.find((item) => item.categories[0].slug === material)?.name || "",
           count: drawerCounter,
         },
       }),

@@ -9,7 +9,7 @@ interface Props {
   changeCounter: (count: number) => void;
 }
 
-const Counter: FC<Props> = ({ count, changeCounter, limit }) => {
+const Counter: FC<Props> = ({ count, changeCounter, limit = 100 }) => {
   const { palette } = useTheme();
 
   const handleIncrement = () => {
@@ -28,7 +28,7 @@ const Counter: FC<Props> = ({ count, changeCounter, limit }) => {
       <CounterText color={palette.grey[700]} variant="h5">
         {count}
       </CounterText>
-      <StyledButton disabled={(limit || 0) >= count} variant="outlined" onClick={handleIncrement}>
+      <StyledButton disabled={limit <= count} variant="outlined" onClick={handleIncrement}>
         <Add />
       </StyledButton>
     </Stack>

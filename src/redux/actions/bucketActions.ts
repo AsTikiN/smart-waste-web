@@ -1,10 +1,11 @@
 import { Loaders } from "redux/types/loaders";
-import { AddToBucketProps, setBucketProps } from "redux/types/types";
+import { AddToBucketProps, DropBucketProps, setBucketProps } from "redux/types/types";
 
 export const ADD_TO_BUCKET = "ADD_TO_BUCKET";
 export const REMOVE_FROM_BUCKET = "REMOVE_FROM_BUCKET";
 export const SET_BUCKET = "SET_BUCKET";
 export const GET_ALL_BUCKET_ITEMS_SERVER = "GET_ALL_BUCKET_ITEMS_SERVER";
+export const DROP_BUCKET_SERVER = "DROP_BUCKET_SERVER";
 
 export const addToBucket = ({ bucketItem }: AddToBucketProps) => ({
   type: ADD_TO_BUCKET,
@@ -28,5 +29,17 @@ export const getAllBucketItemsServer = () => ({
       url: "items",
     },
     loader: Loaders.items,
+  },
+});
+
+export const dropBucketServer = ({ items }: DropBucketProps) => ({
+  type: DROP_BUCKET_SERVER,
+  payload: {
+    request: {
+      method: "POST",
+      url: "dump",
+      data: items,
+    },
+    loader: Loaders.dropBucket,
   },
 });
