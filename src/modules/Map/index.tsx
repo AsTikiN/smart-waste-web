@@ -118,7 +118,7 @@ const Map = () => {
   }, []);
 
   if (!isLoaded) return <BrandLoader show={true} />;
-
+  console.log("isUserLocationKnown", isUserLocationKnown);
   return (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
@@ -165,7 +165,17 @@ const Map = () => {
             );
           }}
         </MarkerClusterer>
-        {isUserLocationKnown && <Marker position={{ lat: userLocation.lat, lng: userLocation.lng }}></Marker>}
+        {isUserLocationKnown && (
+          <Marker
+            position={{ lat: userLocation.lat, lng: userLocation.lng }}
+            icon={{
+              url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png",
+              scaledSize: new window.google.maps.Size(20, 20),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(20, 20),
+            }}
+          ></Marker>
+        )}
       </GoogleMap>
       <SwipeableEdgeDrawer open={showActiveMarker} setOpen={setShowActiveMarker}>
         <Container>
@@ -176,7 +186,7 @@ const Map = () => {
             {activeMarker?.address}
           </Typography>
           {activeMarker?.categories.map((category) => category.emoji)}
-          {isUserLocationKnown && (
+          {!isUserLocationKnown && (
             <Typography mt="5px" onClick={handleGetPermisson}>
               We don't have location permission.
               <Box
