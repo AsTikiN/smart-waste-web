@@ -44,6 +44,9 @@ const authReducer = (state = authInitialState, action: any) => {
       const status = action.payload.status;
       return { ...state, token: null, isAuthorized: status };
     }
+    case LOGOUT: {
+      return { ...state, isAuthorized: false, token: null };
+    }
     default: {
       return { ...state };
     }

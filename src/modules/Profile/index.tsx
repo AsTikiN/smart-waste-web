@@ -9,12 +9,20 @@ import {
   useTheme as useMuiTheme,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { getUserData } from "redux/reducers/userReducer";
+import { getQuests, getUserData } from "redux/reducers/userReducer";
 import QuestItem from "./components/QuestItem";
+import { differenceInDays } from "lib/dateDifference";
+
+const SCORE_PER_LEVEL = 500;
 
 const Profile = () => {
   const userData = useSelector(getUserData);
+  const quests = useSelector(getQuests);
   const { palette } = useMuiTheme();
+
+  const daysWithApp = userData?.createAt ? differenceInDays(userData.createAt, new Date(Date.now())) : 1;
+  const level = userData?.score ? userData?.score / SCORE_PER_LEVEL : 1;
+  const scoreToNextLevel = userData?.score ? userData?.score % SCORE_PER_LEVEL : 0;
 
   return (
     <Stack minHeight="100vh">
@@ -32,9 +40,11 @@ const Profile = () => {
         </Stack>
         <Stack flexDirection="row" justifyContent="space-between" mt="20px">
           <Typography fontWeight={500}>Level Up</Typography>
-          <Typography fontWeight={500}>432/500</Typography>
+          <Typography fontWeight={500}>
+            {scoreToNextLevel}/{SCORE_PER_LEVEL}
+          </Typography>
         </Stack>
-        <Progress variant="determinate" value={(432 / 500) * 100} />
+        <Progress variant="determinate" value={(scoreToNextLevel / SCORE_PER_LEVEL) * 100} />
       </Container>
       <Stack
         mt="40px"
@@ -42,15 +52,15 @@ const Profile = () => {
       >
         <Stack sx={{ flexDirection: "row", justifyContent: "space-around" }}>
           <UserInfoBox>
-            <UserInfoBoxTitle>39</UserInfoBoxTitle>
+            <UserInfoBoxTitle>{userData?.buckets || 0}</UserInfoBoxTitle>
             <Typography>Buckets</Typography>
           </UserInfoBox>
           <UserInfoBox>
-            <UserInfoBoxTitle>17</UserInfoBoxTitle>
+            <UserInfoBoxTitle>{level}</UserInfoBoxTitle>
             <Typography>Level</Typography>
           </UserInfoBox>
           <UserInfoBox>
-            <UserInfoBoxTitle>29</UserInfoBoxTitle>
+            <UserInfoBoxTitle>{daysWithApp}</UserInfoBoxTitle>
             <Typography>Days</Typography>
           </UserInfoBox>
         </Stack>
@@ -65,24 +75,13 @@ const Profile = () => {
         >
           <UserInfoBoxTitle textAlign="center">Quests</UserInfoBoxTitle>
           <Box sx={{ maxHeight: "calc(100vh - 500px)", overflow: "scroll", paddingBottom: "20px" }}>
-            <UserInfoBoxSubtitleTitle>Daily</UserInfoBoxSubtitleTitle>
-            <Stack spacing={2} mt="10px">
-              <QuestItem completeValue={1} totalValue={1}>
-                Enter to app
-              </QuestItem>
-              <QuestItem completeValue={0} totalValue={1}>
-                Take out the trash
-              </QuestItem>
-            </Stack>
-
             <UserInfoBoxSubtitleTitle mt="20px">General</UserInfoBoxSubtitleTitle>
             <Stack spacing={2} mt="10px">
-              <QuestItem completeValue={5} totalValue={5}>
-                Throw out 5 bottles
-              </QuestItem>
-              <QuestItem completeValue={7} totalValue={10}>
-                Throw out 10 bottles
-              </QuestItem>
+              {quests.map((quest) => (
+                <QuestItem key={quest.id} completeValue={quest.completed} totalValue={quest.total}>
+                  {quest.name}
+                </QuestItem>
+              ))}
             </Stack>
           </Box>
         </Stack>

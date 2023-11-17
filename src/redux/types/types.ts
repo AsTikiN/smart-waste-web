@@ -45,6 +45,26 @@ export interface User {
   email: string;
   id: string;
   username: string;
+  createAt: Date;
+  score: number;
+  buckets: number;
+}
+
+interface Category {
+  slug: string;
+  id: number;
+  name: string;
+  emoji: string;
+}
+
+export interface Quest {
+  id: number;
+  name: string;
+  completed: number;
+  total: number;
+  score: number;
+  categoryId: number;
+  categories: Category[];
 }
 
 export interface BucketItem {
@@ -56,7 +76,7 @@ export interface BucketItem {
 export interface BucketItemVariant {
   id: string | number;
   name: string;
-  categories: { slug: string }[];
+  categories: Category[];
 }
 
 export interface ScanImageProps {

@@ -1,13 +1,21 @@
-import { Stack, Switch, useTheme as useMuiTheme } from "@mui/material";
+import { IconButton, Stack, Switch, useTheme as useMuiTheme } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Logo } from "components/Logo";
 import { useTheme } from "hooks/useTheme";
+import { useDispatch } from "react-redux";
+import { logout } from "redux/actions/authActions";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const { toggleTheme } = useTheme();
   const theme = useMuiTheme();
 
   const handleToggleTheme = () => {
     toggleTheme();
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -24,7 +32,12 @@ const Header = () => {
       }}
     >
       <Logo />
-      <Switch onChange={handleToggleTheme} />
+      <Stack flexDirection="row" alignItems="center">
+        <Switch onChange={handleToggleTheme} />
+        <IconButton onClick={handleLogout}>
+          <LogoutIcon />
+        </IconButton>
+      </Stack>
     </Stack>
   );
 };

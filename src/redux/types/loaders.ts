@@ -7,4 +7,5 @@ export enum Loaders {
   items = "items",
   coordinatedBind = "coordinatedBind",
   dropBucket = "dropBucket",
+  quests = "quests",
 }

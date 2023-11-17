@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getUserDataServer } from "redux/actions/userActions";
+import { getUserDataServer, getUserQuestsServer } from "redux/actions/userActions";
 import { useEffect } from "react";
 import { getHydrated, getLoaders } from "redux/reducers/appReducer";
 import { getIsAuthorized } from "redux/reducers/authReducer";
@@ -19,18 +19,21 @@ const Main = () => {
   const isAuthorized = useSelector(getIsAuthorized);
   const loaders = useSelector(getLoaders);
 
+  const showBrandLoader = loaders.self || loaders.scanImage || loaders.items || loaders.quests;
+
   useEffect(() => {
     if (isHydrated && isAuthorized) {
       dispatch(getUserDataServer());
       dispatch(getBinsCoordinatesServer());
       dispatch(getAllBucketItemsServer());
+      dispatch(getUserQuestsServer());
     }
   }, [isAuthorized, isHydrated]);
 
   return (
     <>
       <Header />
-      <BrandLoader show={loaders.self || loaders.scanImage || loaders.items} />
+      <BrandLoader show={showBrandLoader} />
       <Outlet />
       <NavBar />
     </>

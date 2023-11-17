@@ -8,7 +8,7 @@ interface Props {
 }
 
 const QuestItem: FC<Props> = ({ completeValue, totalValue, children }) => {
-  const isCompleted = completeValue === totalValue;
+  const isCompleted = completeValue >= totalValue;
   return (
     <Stack
       sx={{
