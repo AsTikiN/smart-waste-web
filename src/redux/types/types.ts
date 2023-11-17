@@ -43,6 +43,7 @@ export interface CreateUserServerProps {
 export interface User {
   email: string;
   id: string;
+  username: string;
 }
 
 export interface BucketItem {

@@ -23,7 +23,7 @@ const Profile = () => {
           <Avatar sx={{ width: "100px", height: "100px" }} />
           <Stack ml="20px">
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              AsTikiN
+              {userData?.username}
             </Typography>
             <Typography variant="body2" sx={{ fontWeight: 700 }}>
               {userData?.email}
