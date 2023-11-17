@@ -90,14 +90,6 @@ const Map = () => {
       return;
     }
 
-    const availibleCategories = activeMarker?.categories.map((category) => category.name);
-    const availibleBucket = bucket.every((item) => availibleCategories?.includes(item.name));
-
-    if (!availibleBucket) {
-      toast.error("Remove trash that can't be sorted on this area");
-      return;
-    }
-
     dispatch(dropBucketServer({ items: bucket.map((el) => ({ id: el.id as number, count: el.count })) }));
     setShowActiveMarker(false);
   };
