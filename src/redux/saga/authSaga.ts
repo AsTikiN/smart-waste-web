@@ -15,7 +15,7 @@ const authSaga = [
 
 function* handleLoginSuccess() {
   yield toast.success("Successful login");
-  yield put(navigateTo({ link: pages[Routes.map]() }));
+  yield put(navigateTo({ link: pages[Routes.profile]() }));
 }
 
 function* handleLoginFail() {
@@ -24,7 +24,7 @@ function* handleLoginFail() {
 
 function* handleRegisterSuccess() {
   yield toast.success("Successful login");
-  yield put(navigateTo({ link: pages[Routes.map]() }));
+  yield put(navigateTo({ link: pages[Routes.profile]() }));
 }
 
 function* handleRegisterFail() {
