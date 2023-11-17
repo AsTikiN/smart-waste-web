@@ -40,7 +40,7 @@ const SwipeableEdgeDrawer: FC<Props> = ({ open, setOpen, children }) => {
           }}
         >
           <Puller />
-          <Box sx={{ padding: "40px 0" }}>{children}</Box>
+          <Box sx={{ padding: "40px 0 60px" }}>{children}</Box>
         </StyledBox>
       </SwipeableDrawer>
     </>
