@@ -40,6 +40,7 @@ const SignIn = () => {
                 fullWidth
                 variant="contained"
                 onClick={handleSignUp}
+                disabled={loaders.signIn}
               >
                 Sign in
               </Button>
