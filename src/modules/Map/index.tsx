@@ -3,7 +3,6 @@ import { GoogleMap, useJsApiLoader, Marker, MarkerClusterer, InfoWindow } from "
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBinsCoordinates } from "redux/reducers/coordinatesReducer";
-import { getBinsCoordinatesServer } from "redux/actions/coordinatesActions";
 import { BinsCoordinate } from "redux/types/types";
 import BrandLoader from "components/Loader/BrandLoader";
 import { Box, Button, Container, Stack, Typography, useTheme } from "@mui/material";
@@ -48,12 +47,14 @@ const Map = () => {
   const [activeMarker, setActiveMarker] = useState<BinsCoordinate | null>(null);
   const [showActiveMarker, setShowActiveMarker] = useState<boolean>(false);
   const [map, setMap] = useState(null);
-  const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
 
-  const isUserLocationKnown = !(userLocation.lat + userLocation.lng);
+  const isUserLocationKnown = !!userLocation;
   const isCanDrop =
     !activeMarker ||
-    (activeMarker && isUserNearPoint(userLocation, { lat: activeMarker.lat, lng: activeMarker.lng }, 50));
+    (activeMarker &&
+      userLocation &&
+      isUserNearPoint(userLocation, { lat: activeMarker.lat, lng: activeMarker.lng }, 50));
 
   const getPermission = () => {
     if (navigator.geolocation) {
