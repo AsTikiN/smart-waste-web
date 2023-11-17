@@ -6,7 +6,8 @@ import { getBinsCoordinates } from "redux/reducers/coordinatesReducer";
 import { getBinsCoordinatesServer } from "redux/actions/coordinatesActions";
 import { BinsCoordinate } from "redux/types/types";
 import BrandLoader from "components/Loader/BrandLoader";
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Stack, Typography, useTheme } from "@mui/material";
+import SwipeableEdgeDrawer from "components/BottomSheets";
 
 const containerStyle = {
   width: "100%",
@@ -36,6 +37,7 @@ const Map = () => {
     zoom: 10,
   });
   const [activeMarker, setActiveMarker] = useState<BinsCoordinate | null>(null);
+  const [showActiveMarker, setShowActiveMarker] = useState<boolean>(false);
   const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
 
@@ -44,25 +46,7 @@ const Map = () => {
     googleMapsApiKey: mapConfig.bootstrapURLKeys.key,
   });
 
-  const handleMarkerClick = (marker: BinsCoordinate) => () => {
-    setActiveMarker(marker);
-  };
-
-  const handleRemoveActiveMarker = () => {
-    setActiveMarker(null);
-  };
-
-  const onLoad = React.useCallback(function callback(map: any) {
-    // const bounds = new window.google.maps.LatLngBounds(defaultCenter);
-    // map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback(function callback(map: any) {
-    setMap(null);
-  }, []);
-
-  useEffect(() => {
+  const getPermission = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -78,10 +62,42 @@ const Map = () => {
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
-  }, []);
-  console.log("userLocation", userLocation);
-  if (!isLoaded) return <BrandLoader show={true} />;
+  };
 
+  const handleMarkerClick = (marker: BinsCoordinate) => (e: any) => {
+    console.log(e);
+    setActiveMarker(marker);
+    setShowActiveMarker(true);
+  };
+
+  const handleRemoveActiveMarker = () => {
+    setActiveMarker(null);
+  };
+
+  const handleCloseModal = () => {
+    setShowActiveMarker(false);
+  };
+
+  const handleGetPermisson = async () => {
+    getPermission();
+  };
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    // const bounds = new window.google.maps.LatLngBounds(defaultCenter);
+    // map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
+
+  useEffect(() => {
+    getPermission();
+  }, []);
+
+  if (!isLoaded) return <BrandLoader show={true} />;
+  console.log("acac", activeMarker);
   return (
     <div className="map-wrapper" style={{ width: "100%", height: "100vh" }}>
       <GoogleMap
@@ -129,19 +145,37 @@ const Map = () => {
           }}
         </MarkerClusterer>
         {userLocation && <Marker position={{ lat: userLocation.lat, lng: userLocation.lng }}></Marker>}
-        {activeMarker && (
-          <InfoWindow position={{ lat: data[0].lat, lng: data[0].lng }} onCloseClick={handleRemoveActiveMarker}>
-            <Stack>
-              <Typography variant="body1" color="#0e0e0e">
-                Name: {activeMarker.name}
-              </Typography>
-              <Typography variant="body1" color="#0e0e0e">
-                Address: {activeMarker.address}
-              </Typography>
-            </Stack>
-          </InfoWindow>
-        )}
       </GoogleMap>
+      <SwipeableEdgeDrawer open={showActiveMarker} setOpen={setShowActiveMarker}>
+        <Container>
+          <Typography variant="h5" fontWeight={700}>
+            {activeMarker?.name}
+          </Typography>
+          <Typography mt="10px" variant="h6" fontWeight={500}>
+            {activeMarker?.address}
+          </Typography>
+          <Typography mt="5px" onClick={handleGetPermisson}>
+            We don't have location permission.
+            <Box
+              sx={{
+                display: "inline",
+                color: "#6B69F6",
+                textDecoration: "underline",
+              }}
+            >
+              Give a permission
+            </Box>
+          </Typography>
+          <Stack spacing={2} mt="20px">
+            <Button size="large" fullWidth variant="outlined">
+              Go
+            </Button>
+            <Button size="large" fullWidth variant="contained" onClick={handleCloseModal}>
+              Clean bucket
+            </Button>
+          </Stack>
+        </Container>
+      </SwipeableEdgeDrawer>
     </div>
   );
 };
